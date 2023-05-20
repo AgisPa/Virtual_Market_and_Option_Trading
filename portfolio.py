@@ -5,11 +5,10 @@ from bson.objectid import ObjectId
 from numba import jit
 import data_collect
 
-#Link to your MongoDB database
-link=...
+capital = 10000000
 
 ca = certifi.where()
-cluster = MongoClient(link, tlsCAFile=ca)
+cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
 database = cluster["MarketData"]
 port_collection = database["Portfolio"]
 reference = database["ask-bid"]
@@ -67,6 +66,5 @@ def pull_through():
 
 @jit()
 def wallet_initialize():
-    capital = 1000000
     prev = list(wallet.find({}, {"_id": False}))[0]["Cash"]
     wallet.update_one({"Cash": prev}, {"$set": {"Cash": capital}})

@@ -6,12 +6,8 @@ import certifi
 import pandas as pd
 import math
 
-
-#Link to your MongoDB database
-link=...
-
 ca = certifi.where()
-cluster = MongoClient(link, tlsCAFile=ca)
+cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
 database = cluster["MarketData"]
 collection = database["ask-bid"]
 spot_collection=database["Spot"]
@@ -47,7 +43,7 @@ def black_scholes(strike, expiration_time):
 
 @jit()
 def evaluation():
-    data = pd.read_csv(r'folder/subfolder/data.csv')
+    data = pd.read_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\data.csv')
     strikes=data["strike"]
     call_bid=data["call_bid"]
     call_ask=data["call_ask"]
@@ -68,8 +64,8 @@ def evaluation():
     for times in range(len(quote_time)):
         if quote_time[times]==time:
             strike=strikes[times]
-            if str(int(round(round(abs(times-quote_time.index(2)),1)/(the_range)*100,0)))+"% complete" !=report:
-                report=str(int(round(round(abs(times-quote_time.index(2)),1)/(the_range)*100,0)))+"% complete"
+            if str(int(round(round(abs(times-quote_time.index(time)),1)/(the_range)*100,0)))+"% complete" !=report:
+                report=str(int(round(round(abs(times-quote_time.index(time)),1)/(the_range)*100,0)))+"% complete"
                 print("Black-Scholes analysis: ",report,"  ", datetime.datetime.now())
             expiration=expiration_times[times]
             call_put=black_scholes(strike,expiration)
@@ -86,4 +82,4 @@ def evaluation():
 @jit()
 def report():
     df=pd.DataFrame(evaluation())
-    df.to_csv(r'folder/subfolder/evaluation.csv',index=False)
+    df.to_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\evaluation.csv',index=False)

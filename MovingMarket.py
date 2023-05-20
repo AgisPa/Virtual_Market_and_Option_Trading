@@ -7,18 +7,13 @@ import certifi
 from numba import njit, jit
 from bson.objectid import ObjectId
 
-
-#Link to your MongoDB database
-link=...
-
-
 ca = certifi.where()
-cluster = MongoClient(link, tlsCAFile=ca)
+cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
 database = cluster["MarketData"]
 ask_bid_collection = database["ask-bid"]
 collection = database["SampleStocks"]
 spot_collection = database["Spot"]
-init_data=pd.read_csv(r'folder/subfolder/statistics.csv')
+init_data=pd.read_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\statistics.csv')
 
 @njit()
 def market_initial_stock_value():
@@ -65,14 +60,13 @@ def market_statistics(s0):
     mu=np.mean(par_inport)
     sigma=np.std(par_inport)
     df=pd.DataFrame({"s0":s0 ,"mu": mu , "sigma": sigma,"Parallel Stock" :stocks[par_stock_index] },index=[0])
-    df.to_csv(r'folder/subfolder/statistics.csv')
-
+    df.to_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\statistics.csv')
 @jit()
 def market_step(s0,mu,sigma,time):
     mu=mu/s0
     sigma=sigma/s0
     st=s0*np.exp((mu - 0.5 * sigma ** 2) * (1. / 365.) + sigma *np.sqrt(1/365)*gauss(mu=0, sigma=1))
-    time=time+1
+    time+=1
     spot_collection.insert_one({
         "Spot": st,
         "Time":time
@@ -91,7 +85,6 @@ def market_move(play,in_time):
             spot=spot_collection.find().sort("Time", -1).limit(1)
             for posts in spot:
                 market_step(posts["Spot"], mu, sigma, in_time)
-
 @jit()
 def market_initialization():
     #For multiple stocks change below
