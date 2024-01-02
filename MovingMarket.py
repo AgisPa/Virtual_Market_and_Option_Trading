@@ -8,7 +8,7 @@ from numba import njit, jit
 from bson.objectid import ObjectId
 
 ca = certifi.where()
-cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+cluster = MongoClient('', tlsCAFile=ca)
 database = cluster["MarketData"]
 ask_bid_collection = database["ask-bid"]
 collection = database["SampleStocks"]
@@ -60,7 +60,7 @@ def market_statistics(s0):
     mu=np.mean(par_inport)
     sigma=np.std(par_inport)
     df=pd.DataFrame({"s0":s0 ,"mu": mu , "sigma": sigma,"Parallel Stock" :stocks[par_stock_index] },index=[0])
-    df.to_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\statistics.csv')
+    df.to_csv('')
 @jit()
 def market_step(s0,mu,sigma,time):
     mu=mu/s0
