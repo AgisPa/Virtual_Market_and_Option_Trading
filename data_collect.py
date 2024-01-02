@@ -8,7 +8,7 @@ import certifi
 
 #Connects and gets collection
 ca = certifi.where()
-cluster=MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+cluster=MongoClient('', tlsCAFile=ca)
 database=cluster["MarketData"]
 collection=database["ask-bid"]
 coll=collection.find({})
@@ -124,4 +124,4 @@ def option_data():
         "call_size":stocks_options_call_sizes[0],
         "put_size":stocks_options_put_sizes[0]
     })
-    df.to_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\data.csv',index=False)
+    df.to_csv('',index=False)
