@@ -12,7 +12,7 @@ order_book_size=200
 
 
 ca = certifi.where()
-cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+cluster = MongoClient('', tlsCAFile=ca)
 database = cluster["MarketData"]
 order_collection = database["OrderBook"]
 port_collection = database["Portfolio"]
@@ -22,7 +22,7 @@ wallet = database["Wallet"]
 
 @jit()
 def importance_factor():
-    element = pd.read_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\evaluation.csv',
+    element = pd.read_csv(r'',
                      usecols=["_id", "call_buy", "call_sell", "put_buy", "put_sell"])
     factor_collection = database["ImportanceFactor"]
     call_buy=list(element["call_buy"])
