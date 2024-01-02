@@ -7,7 +7,7 @@ import pandas as pd
 import math
 
 ca = certifi.where()
-cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+cluster = MongoClient('', tlsCAFile=ca)
 database = cluster["MarketData"]
 collection = database["ask-bid"]
 spot_collection=database["Spot"]
@@ -43,7 +43,7 @@ def black_scholes(strike, expiration_time):
 
 @jit()
 def evaluation():
-    data = pd.read_csv(r'C:\Users\cooki\Desktop\Virtual Market Project\data.csv')
+    data = pd.read_csv(r'')
     strikes=data["strike"]
     call_bid=data["call_bid"]
     call_ask=data["call_ask"]
