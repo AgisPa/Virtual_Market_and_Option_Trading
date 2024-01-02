@@ -28,7 +28,7 @@ order_increment=1
 @jit()
 def start_sim(duration, market_step,order_increment,max_orders):
     ca = certifi.where()
-    cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+    cluster = MongoClient('', tlsCAFile=ca)
     database = cluster["MarketData"]
     order_collection = database["OrderBook"]
     order_collection.delete_many({})
