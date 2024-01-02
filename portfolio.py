@@ -8,7 +8,7 @@ import data_collect
 capital = 10000000
 
 ca = certifi.where()
-cluster = MongoClient('mongodb+srv://Agis:IyuQpSizXj2IVoIz@firstcluster.wmeiivv.mongodb.net/test', tlsCAFile=ca)
+cluster = MongoClient('', tlsCAFile=ca)
 database = cluster["MarketData"]
 port_collection = database["Portfolio"]
 reference = database["ask-bid"]
